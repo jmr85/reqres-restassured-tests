@@ -1,0 +1,59 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Reqres API Test Suite">
+
+    <test name="Pruebas Positivas">
+        <groups>
+            <run>
+                <include name="positiva" />
+            </run>
+        </groups>
+        <classes>
+            <class name="apitests.APITest" />
+        </classes>
+    </test>
+
+    <test name="Pruebas Auth">
+        <groups>
+            <run>
+                <include name="auth" />
+            </run>
+        </groups>
+        <classes>
+            <class name="apitests.AuthTest" />
+        </classes>
+    </test>
+
+    <test name="Pruebas Negativas">
+        <groups>
+            <run>
+                <include name="negativa" />
+            </run>
+        </groups>
+        <classes>
+            <class name="apitests.NegativasTest" />
+        </classes>
+    </test>
+
+    <test name="Pruebas de Performance">
+        <groups>
+            <run>
+                <include name="performance" />
+            </run>
+        </groups>
+        <classes>
+            <class name="apitests.PerformanceTest" />
+        </classes>
+    </test>
+
+    <test name="Validacion de Esquemas">
+        <groups>
+            <run>
+                <include name="schema" />
+            </run>
+        </groups>
+        <classes>
+            <class name="apitests.SchemaValidationTest" />
+        </classes>
+    </test>
+
+</suite>
