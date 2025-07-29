@@ -8,8 +8,17 @@
             </run>
         </groups>
         <classes>
-            <class name="apitests.APITest" />
-            <class name="apitests.UserRetrievalTest" />
+            <class name="apitests.APITest" >
+                <methods>
+                    <include name="borrarUsuario">
+                        <parameter name="userId" value="690" />
+                    </include>
+                </methods>
+            </class>    
+            <class name="apitests.UserRetrievalTest">
+                <parameter name="userId" value="2" />
+                <parameter name="page" value="2" />
+            </class>
         </classes>
     </test>
 
@@ -31,7 +40,10 @@
             </run>
         </groups>
         <classes>
-            <class name="apitests.NegativasTest" />
+            <class name="apitests.NegativasTest">
+                <parameter name="missingUserId" value="23" />
+                <parameter name="invalidUserId" value="2" />
+            </class>
         </classes>
     </test>
 
@@ -47,6 +59,8 @@
     </test>
 
     <test name="Validacion de Esquemas">
+        <parameter name="userId" value="2" />
+        <parameter name="schemaPath" value="schemas/user-schema.json" />
         <groups>
             <run>
                 <include name="schema" />

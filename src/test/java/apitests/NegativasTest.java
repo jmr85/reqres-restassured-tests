@@ -1,6 +1,6 @@
 package apitests;
 
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -17,11 +17,12 @@ public class NegativasTest extends BaseAPITest {
     @Severity(SeverityLevel.NORMAL)
     @Tag("GET")
     @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/get_users__id_")
-    public void usuarioNoEncontrado() {
+    @Parameters({"missingUserId"})
+    public void usuarioNoEncontrado(@Optional("23") String missingUserId) {
         given()
                 .spec(getRequestSpec())
                 .when()
-                .get("/users/23")
+                .get("/users/" + missingUserId)
                 .then()
                 .statusCode(404);
     }
@@ -45,7 +46,8 @@ public class NegativasTest extends BaseAPITest {
     @Description("Falla esperada al actualizar un usuario usando campos no válidos o mal nombrados")
     @Severity(SeverityLevel.NORMAL)
     @Tag("PUT")
-    public void actualizarUsuarioCamposInvalidos() {
+    @Parameters({"invalidUserId"})
+    public void actualizarUsuarioCamposInvalidos(@Optional("2") String invalidUserId) {
         String body = """
             {
                 "nombre_completo": "sin formato"
@@ -56,7 +58,7 @@ public class NegativasTest extends BaseAPITest {
                 .spec(getRequestSpec())
                 .body(body)
                 .when()
-                .put("/users/2")
+                .put("/users/" + invalidUserId)
                 .then()
                 .statusCode(400); // La API responde 200, pero deberia ser 400
     }

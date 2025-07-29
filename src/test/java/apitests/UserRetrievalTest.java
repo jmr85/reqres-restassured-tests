@@ -1,6 +1,6 @@
 package apitests;
 
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -18,11 +18,12 @@ public class UserRetrievalTest extends BaseAPITest {
     @Severity(SeverityLevel.CRITICAL)
     @Tag("GET")
     @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/get_users__id_")
-    public void obtenerUsuarioExistente() {
+    @Parameters({"userId"})
+    public void obtenerUsuarioExistente(@Optional("2") String userId) {
         given()
                 .spec(getRequestSpec())
                 .when()
-                .get("/users/2")
+                .get("/users/" + userId)
                 .then()
                 .statusCode(200)
                 .body("data.id", equalTo(2))
@@ -35,7 +36,8 @@ public class UserRetrievalTest extends BaseAPITest {
     @Severity(SeverityLevel.MINOR)
     @Tag("GET")
     @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/get_users")
-    public void listarUsuariosPaginaDos() {
+    @Parameters({"page"})
+    public void listarUsuariosPaginaDos(@Optional("2") String page) {
         given()
                 .spec(getRequestSpec())
                 .when()

@@ -1,6 +1,6 @@
 package apitests;
 
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -68,11 +68,12 @@ public class APITest extends BaseAPITest {
     @Description("Elimina un usuario existente")
     @Tag("DELETE")
     @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/delete_users__id_")
-    public void borrarUsuario() {
+    @Parameters({"userId"})
+    public void borrarUsuario(@Optional("690") String userId) {
         given()
                 .spec(getRequestSpec())
                 .when()
-                .delete("/users/690")
+                .delete("/users/" + userId)
                 .then()
                 .statusCode(204)
                 .log().all();

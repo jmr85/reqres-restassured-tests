@@ -1,6 +1,6 @@
 package apitests;
 
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -18,13 +18,14 @@ public class SchemaValidationTest extends BaseAPITest {
     @Severity(SeverityLevel.NORMAL)
     @Tag("GET")
     @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/get_users__id_")
-    public void validarSchemaUsuarioPorId() {
+    @Parameters({"userId", "schemaPath"})
+    public void validarSchemaUsuarioPorId(@Optional("2") String userId, @Optional("schemas/user-schema.json") String schemaPath) {
         given()
                 .spec(getRequestSpec())
                 .when()
-                .get("/users/2")
+                .get("/users/" + userId)
                 .then()
                 .statusCode(200)
-                .body(matchesJsonSchemaInClasspath("schemas/user-schema.json"));
+                .body(matchesJsonSchemaInClasspath(schemaPath));
     }
 }
