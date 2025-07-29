@@ -3,13 +3,7 @@ package apitests;
 import static org.hamcrest.Matchers.lessThan;
 import org.testng.annotations.Test;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import static io.restassured.RestAssured.given;
 
@@ -23,6 +17,7 @@ public class PerformanceTest extends BaseAPITest {
     @Description("Verifica que el endpoint GET /users?page=2 responda en menos de 2 segundos")
     @Severity(SeverityLevel.MINOR)
     @Tag("GET")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/get_users")
     public void respuestaRapida() {
         given()
                 .spec(getRequestSpec())
@@ -30,6 +25,6 @@ public class PerformanceTest extends BaseAPITest {
                 .get("/users?page=2")
                 .then()
                 .statusCode(200)
-                .time(lessThan(2000L)); // en milisegundos
+                .time(lessThan(2000L));
     }
 }

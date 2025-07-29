@@ -2,13 +2,7 @@ package apitests;
 
 import org.testng.annotations.Test;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 
 import static io.restassured.RestAssured.given;
@@ -48,6 +42,7 @@ public class APITest extends BaseAPITest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Actualiza los datos de un usuario existente")
     @Tag("PUT")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/put_users__id_")
     public void actualizarUsuario() {
         String body = """
             {
@@ -72,6 +67,7 @@ public class APITest extends BaseAPITest {
     @Severity(SeverityLevel.MINOR)
     @Description("Elimina un usuario existente")
     @Tag("DELETE")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/delete_users__id_")
     public void borrarUsuario() {
         given()
                 .spec(getRequestSpec())

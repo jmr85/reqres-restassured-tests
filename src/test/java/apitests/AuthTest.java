@@ -21,6 +21,7 @@ public class AuthTest extends BaseAPITest {
     @Description("Registra un usuario correctamente")
     @Severity(SeverityLevel.CRITICAL)
     @Tag("POST")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/post_register")
     public void registroExitoso() {
         String body = """
             {
@@ -47,6 +48,7 @@ public class AuthTest extends BaseAPITest {
     @Description("Falla el registro cuando falta el password")
     @Severity(SeverityLevel.NORMAL)
     @Tag("POST")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/post_register")
     public void registroFallidoSinPassword() {
         String body = """
             {
@@ -71,6 +73,7 @@ public class AuthTest extends BaseAPITest {
     @Description("Login exitoso con email y password válidos")
     @Severity(SeverityLevel.CRITICAL)
     @Tag("POST")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/post_login")
     public void loginExitoso() {
         String body = """
             {
@@ -96,6 +99,7 @@ public class AuthTest extends BaseAPITest {
     @Description("Falla el login cuando falta el password")
     @Severity(SeverityLevel.NORMAL)
     @Tag("POST")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/post_login")
     public void loginFallidoSinPassword() {
         String body = """
             {

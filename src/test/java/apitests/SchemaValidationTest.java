@@ -2,13 +2,7 @@ package apitests;
 
 import org.testng.annotations.Test;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -23,6 +17,7 @@ public class SchemaValidationTest extends BaseAPITest {
     @Description("Valida que la respuesta del endpoint GET /users/2 cumpla con el esquema JSON definido")
     @Severity(SeverityLevel.NORMAL)
     @Tag("GET")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/get_users__id_")
     public void validarSchemaUsuarioPorId() {
         given()
                 .spec(getRequestSpec())

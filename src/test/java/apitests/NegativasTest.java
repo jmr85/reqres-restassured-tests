@@ -2,13 +2,7 @@ package apitests;
 
 import org.testng.annotations.Test;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Owner;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import static io.restassured.RestAssured.given;
 
@@ -16,6 +10,21 @@ import static io.restassured.RestAssured.given;
 @Feature("Pruebas Negativas")
 @Owner("Juan Martin Ruiz")
 public class NegativasTest extends BaseAPITest {
+
+    @Test(groups = {"negativa"}, description = "Usuario no encontrado")
+    @Story("Usuario inexistente")
+    @Description("Valida que la API responde 404 cuando el usuario no existe")
+    @Severity(SeverityLevel.NORMAL)
+    @Tag("GET")
+    @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/get_users__id_")
+    public void usuarioNoEncontrado() {
+        given()
+                .spec(getRequestSpec())
+                .when()
+                .get("/users/23")
+                .then()
+                .statusCode(404);
+    }
 
     @Test(groups = "negativa", description = "Falla al crear un usuario sin body")
     @Story("Crear usuario con body vacío")
