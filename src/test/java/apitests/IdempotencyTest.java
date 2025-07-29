@@ -8,8 +8,6 @@ import io.qameta.allure.testng.Tag;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.anyOf;
 
 @Epic("Reqres User API")
 @Feature("Idempotencia")
