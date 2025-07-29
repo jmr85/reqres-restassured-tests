@@ -71,4 +71,19 @@
         </classes>
     </test>
 
+    
+    <test name="Pruebas Idempotencia">
+        <groups>
+            <run>
+                <include name="idempotencia" />
+            </run>
+        </groups>
+        <classes>
+            <class name="apitests.IdempotencyTest" >
+                <parameter name="get_userId" value="2"/>
+                <parameter name="delete_userId" value="690" />
+            </class>    
+        </classes>
+    </test>
+
 </suite>
