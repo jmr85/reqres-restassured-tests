@@ -1,6 +1,6 @@
 package apitests;
 
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import io.qameta.allure.testng.*;
 
@@ -14,21 +14,37 @@ import static io.restassured.RestAssured.given;
 @Feature("Authentication")
 @Owner("Juan Martin Ruiz")
 public class AuthTest extends BaseAPITest {
+
+    @DataProvider(name = "credencialesRegistro")
+    public Object[][] credencialesRegistro() {
+        return new Object[][] {
+                {"eve.holt@reqres.in", "pistol"},
+                {"janet.weaver@reqres.in", "pistol"}
+        };
+    }
+
+    @DataProvider(name = "credencialesLogin")
+    public Object[][] credencialesLogin() {
+        return new Object[][] {
+                {"eve.holt@reqres.in", "cityslicka"},
+                {"janet.weaver@reqres.in", "superpassword"}
+        };
+    }
     
     // ✅ Registro exitoso
-    @Test(groups = {"auth", "positiva"})
+    @Test(groups = {"auth", "positiva"}, dataProvider = "credencialesRegistro")
     @Story("Registro de usuario")
     @Description("Registra un usuario correctamente")
     @Severity(SeverityLevel.CRITICAL)
     @Tag("POST")
     @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/post_register")
-    public void registroExitoso() {
-        String body = """
+    public void registroExitoso(String email, String password) {
+        String body = String.format("""
             {
-                "email": "eve.holt@reqres.in",
-                "password": "pistol"
+                "email": "%s",
+                "password": "%s"
             }
-        """;
+        """, email, password);
 
         given()
                 .spec(getRequestSpec()) 
@@ -68,19 +84,19 @@ public class AuthTest extends BaseAPITest {
     }
 
     // ✅ Login exitoso
-    @Test(groups = {"auth", "positiva"})
+    @Test(groups = {"auth", "positiva"}, dataProvider = "credencialesLogin")
     @Story("Login de usuario")
     @Description("Login exitoso con email y password válidos")
     @Severity(SeverityLevel.CRITICAL)
     @Tag("POST")
     @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/post_login")
-    public void loginExitoso() {
-        String body = """
+    public void loginExitoso(String email, String password) {
+        String body = String.format("""
             {
-                "email": "eve.holt@reqres.in",
-                "password": "cityslicka"
+                "email": "%s",
+                "password": "%s"
             }
-        """;
+        """, email, password);
 
         given()
                 .spec(getRequestSpec()) 
