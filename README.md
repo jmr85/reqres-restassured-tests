@@ -74,7 +74,7 @@ src/
 
 ## ⚙️ GitHub Actions: CI y despliegue de reportes
 
-Este repositorio utiliza GitHub Actions para ejecutar los tests automáticamente en cada push o pull request sobre la rama principal. El workflow:
+Este repositorio utiliza GitHub Actions para ejecutar los tests automáticamente en cada push o pull request sobre la rama principal, o en forma programada mediante un job con cron. El workflow:
 
 - Ejecuta `./gradlew clean test`
 - Genera el reporte Allure
@@ -85,6 +85,9 @@ Archivo del workflow:
 `.github/workflows/deploy-report.yml`
 
 > Además, el job solo publica el reporte si hay tests ejecutados, y puede configurarse para enviar notificaciones por email o Slack si hay fallos.
+
+Nota:
+También se ejecuta automáticamente todos los días a las 2:00 AM (UTC) gracias a la configuración de schedule con cron en el workflow.
 
 ---
 
