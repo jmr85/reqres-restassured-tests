@@ -19,6 +19,7 @@ repositories {
 def allureVersion = "2.24.0"
 // Define the version of AspectJ
 def aspectJVersion = "1.9.20.1"
+def log4j2Version  = "2.25.1"
 
 // Define configuration for AspectJ agent
 configurations {
@@ -41,6 +42,13 @@ dependencies {
     testImplementation "io.qameta.allure:allure-testng"
     // Add Allure Rest Assured integration
     testImplementation "io.qameta.allure:allure-rest-assured"
+
+    // Add Log4j2 for logging
+    implementation 'org.slf4j:slf4j-api:2.0.13'
+    implementation "org.apache.logging.log4j:log4j-core:$log4j2Version"
+    implementation "org.apache.logging.log4j:log4j-api:$log4j2Version"
+    implementation "org.apache.logging.log4j:log4j-slf4j2-impl:$log4j2Version"
+
     // Add aspectjweaver dependency
     agent "org.aspectj:aspectjweaver:$aspectJVersion"
 }
@@ -56,8 +64,11 @@ tasks.named('test') {
     // Use TestNG for unit tests.
     useTestNG(){
         suites 'src/test/resources/testng.xml'
-        jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
+        jvmArgs = [ "-javaagent:${configurations.agent.singleFile}", 
+             "-Dlog4j2.configurationFile=log4j2.xml"
+        ]
     }
+    systemProperty 'log4j2.configurationFile', 'log4j2.xml'
     // Enable Allure reporting
     // systemProperty "allure.results.directory", "$buildDir/allure-results"
 }

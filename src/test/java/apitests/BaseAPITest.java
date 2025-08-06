@@ -10,7 +10,12 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BaseAPITest {
+
+    private static final Logger log = LoggerFactory.getLogger(BaseAPITest.class);
 
     protected static final AllureRestAssured allureFilter =
         new AllureRestAssured()
@@ -21,14 +26,14 @@ public class BaseAPITest {
 
     @BeforeMethod
     public void setup() {
+        log.info("=== SETUP EJECUTÁNDOSE ===");
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.config = RestAssured.config()
             .logConfig(LogConfig.logConfig()
                 .enableLoggingOfRequestAndResponseIfValidationFails(LogDetail.ALL));
-                
-        System.out.println("=== SETUP EJECUTÁNDOSE ===");
+
         initializeRequestSpec();
-        System.out.println("=== SETUP COMPLETADO ===");
+        log.info("=== SETUP COMPLETADO ===");
     }
     
     private void initializeRequestSpec() {
@@ -41,16 +46,16 @@ public class BaseAPITest {
             builder.addFilter(allureFilter);
             
             requestSpec = builder.build();
-            System.out.println("RequestSpec inicializado correctamente");
+            log.debug("RequestSpec inicializado correctamente");
         } catch (Exception e) {
-            System.err.println("Error inicializando requestSpec: " + e.getMessage());
+            log.error("Error inicializando requestSpec", e);
             throw e;
         }
     }
     
     protected RequestSpecification getRequestSpec() {
         if (requestSpec == null) {
-            System.out.println("RequestSpec es null, inicializando...");
+            log.warn("requestSpec == null, inicializando...");
             initializeRequestSpec();
         }
         return requestSpec;
