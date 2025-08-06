@@ -2,6 +2,10 @@ package apitests;
 
 import org.testng.annotations.BeforeMethod;
 
+import org.testng.annotations.AfterMethod;
+
+import io.qameta.allure.Allure;
+
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -9,6 +13,12 @@ import io.restassured.config.LogConfig;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +37,11 @@ public class BaseAPITest {
     @BeforeMethod
     public void setup() {
         log.info("=== SETUP EJECUTÁNDOSE ===");
+        try {
+            Files.deleteIfExists(Paths.get("logs", "test.log"));
+        } catch (IOException e) {
+            log.warn("No se pudo limpiar el log de la prueba", e);
+        }
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.config = RestAssured.config()
             .logConfig(LogConfig.logConfig()
@@ -34,6 +49,15 @@ public class BaseAPITest {
 
         initializeRequestSpec();
         log.info("=== SETUP COMPLETADO ===");
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void attachLog() throws IOException {
+        Path logPath = Paths.get("logs", "test.log");
+        if (Files.exists(logPath)) {
+            Allure.addAttachment("Ejecución Log4j", "text/plain",
+                Files.newInputStream(logPath), "log");
+        }
     }
     
     private void initializeRequestSpec() {
