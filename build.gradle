@@ -68,7 +68,4 @@ tasks.named('test') {
              "-Dlog4j2.configurationFile=log4j2.xml"
         ]
     }
-    systemProperty 'log4j2.configurationFile', 'log4j2.xml'
-    // Enable Allure reporting
-    // systemProperty "allure.results.directory", "$buildDir/allure-results"
 }
