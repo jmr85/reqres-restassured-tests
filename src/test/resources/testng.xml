@@ -13,6 +13,14 @@
                     <include name="borrarUsuario">
                         <parameter name="userId" value="690" />
                     </include>
+                    <include name="crearUsuario">
+                        <parameter name="name" value="free range" />
+                        <parameter name="job" value="patito" />
+                    </include>
+                    <include name="actualizarUsuario">
+                        <parameter name="name" value="John Doe" />
+                        <parameter name="job" value="Writer" />
+                    </include>
                 </methods>
             </class>    
             <class name="apitests.UserRetrievalTest">

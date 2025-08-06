@@ -7,6 +7,8 @@ import io.qameta.allure.testng.Tag;
 
 import static io.restassured.RestAssured.given;
 
+import apitests.models.User;
+
 @Epic("Reqres User API")
 @Feature("User Management")
 @Owner("Juan Martin Ruiz")
@@ -18,17 +20,14 @@ public class APITest extends BaseAPITest {
     @Severity(SeverityLevel.CRITICAL)
     @Description("Crea un usuario nuevo con nombre y trabajo")
     @Tag("POST")
-    public void crearUsuario() {
-        String body = """
-            {
-                "name": "free range",
-                "job": "patito"
-            }
-        """;
+    @Parameters({"name", "job"})
+    public void crearUsuario(String name, String job) {
+    
+        User newUser = new User(name, job);
 
         given()
                 .spec(getRequestSpec())
-                .body(body)
+                .body(newUser)
                 .when()
                 .post("/users")
                 .then()
@@ -36,24 +35,21 @@ public class APITest extends BaseAPITest {
                 .log().all();
     }
 
-    @Test
+    @Test(groups = "negativa", description = "Falla al actualizar un usuario con campos inválidos")
     @Story("Actualizar usuario")
     @Owner("Juan Martin Ruiz")
     @Severity(SeverityLevel.NORMAL)
     @Description("Actualiza los datos de un usuario existente")
     @Tag("PUT")
     @Link(name = "API Documentation", url = "https://reqres.in/api-docs/#/default/put_users__id_")
-    public void actualizarUsuario() {
-        String body = """
-            {
-                "name": "John Doe",
-                "job": "Writer"
-            }
-            """;
+    @Parameters({"name", "job"})
+    public void actualizarUsuario(String name, String job) {
+  
+        User editUser = new User(name, job);    
 
         given()
                 .spec(getRequestSpec())
-                .body(body)
+                .body(editUser)
                 .when()
                 .put("/users/690")
                 .then()
