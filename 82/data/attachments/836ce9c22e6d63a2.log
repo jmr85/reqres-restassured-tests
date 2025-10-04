@@ -1,0 +1,3 @@
+10/04/2025 02:28:05.222 [Test worker] DEBUG TestNG - suiteXmlPath: "/home/runner/work/reqres-restassured-tests/reqres-restassured-tests/src/test/resources/testng.xml"
+10/04/2025 02:28:06.457 [Test worker] WARN  BaseAPITest - requestSpec == null, inicializando...
+10/04/2025 02:28:06.521 [Test worker] DEBUG BaseAPITest - RequestSpec inicializado correctamente
